@@ -1,0 +1,20 @@
+<h1>dfsgdgdf</h1>
+
+<!-- <form action="." method="post">
+{% csrf_token %}
+<input type="radio" name="choice" value={{one}}>
+<label for="">{{one}}</label><br>
+<input type="radio" name="choice" value={{two}}>
+<label for="">{{two}}</label><br>
+<input type="submit" value="Vote2">
+</form> -->
+
+<form action="." method="post">
+    {% csrf_token %}
+    <input type="submit" name="choice" value={{one}} />
+</form>
+
+<form action="." method="post">
+    {% csrf_token %}
+    <input type="submit" name="choice" value={{two}} />
+</form>
