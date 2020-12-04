@@ -8,25 +8,29 @@
     {% endblock %}
   </head>
   <body>
-    <h1 class="mt-2 text-center">Import store ids</h1>
+    <h1 class="mt-2 text-center">Помножити {{first_number}} на {{second_number}}</h1>
     <div class="container">
         <div class="row pt-3">
             <div class="col text-center">
                 <form action="." method="post">
                     {% csrf_token %}
-                    <input type="submit" name="choice" value={{one}} />
+                    <input type="submit" name="choice" value={{first_question}} />
+                    <input type="hidden" name="result" value={{multiplication_result}} />
                 </form>
                 <form action="." method="post">
                     {% csrf_token %}
-                    <input type="submit" name="choice" value={{two}} />
+                    <input type="submit" name="choice" value={{second_question}} />
+                    <input type="hidden" name="result" value={{multiplication_result}} />
                 </form>
                 <form action="." method="post">
                     {% csrf_token %}
-                    <input type="submit" name="choice" value={{third}} />
+                    <input type="submit" name="choice" value={{third_question}} />
+                    <input type="hidden" name="result" value={{multiplication_result}} />
                 </form>
                 <form action="." method="post">
                     {% csrf_token %}
-                    <input type="submit" name="choice" value={{four}} />
+                    <input type="submit" name="choice" value={{fourth_question}} />
+                    <input type="hidden" name="result" value={{multiplication_result}} />
                 </form>
             </div>
         </div>
