@@ -1,6 +1,7 @@
 import random
 from datetime import datetime, timedelta
 
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -47,3 +48,7 @@ def index(request):
             "multiplication_result": multiplication_result,
         },
     )
+
+
+def server_time_view(request):
+    return HttpResponse(datetime.now().strftime("%H:%M:%S"))
