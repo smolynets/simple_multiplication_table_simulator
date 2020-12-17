@@ -45,21 +45,20 @@ def index(request):
         return render(
             request, "limit_per_day.html", {"correct_aswers": request.session["correct_aswers"]},
         )
-    else:
-        return render(
-            request,
-            "index.html",
-            {
-                "first_number": first_number,
-                "second_number": second_number,
-                "first_question": random_answers[0],
-                "second_question": random_answers[1],
-                "third_question": random_answers[2],
-                "fourth_question": random_answers[3],
-                "multiplication_result": multiplication_result,
-                "current_question_number": request.session["question_number"],
-            },
-        )
+    return render(
+        request,
+        "index.html",
+        {
+            "first_number": first_number,
+            "second_number": second_number,
+            "first_question": random_answers[0],
+            "second_question": random_answers[1],
+            "third_question": random_answers[2],
+            "fourth_question": random_answers[3],
+            "multiplication_result": multiplication_result,
+            "current_question_number": request.session["question_number"],
+        },
+    )
 
 
 def server_time_view(request):
