@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-from .external_settings import time_zone
+
+from .external_settings import debug, time_zone
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "vw6xh^n^r5j!v*k+75*z^%s1kapcuh8y-qkcr#0&5r4=r72nb8"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+try:
+    DEBUG = debug
+except:
+    DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -95,7 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 
 try:
-    TIME_ZONE = "Europe/Kiev"
+    TIME_ZONE = time_zone
 except:
     TIME_ZONE = "UTC"
 
