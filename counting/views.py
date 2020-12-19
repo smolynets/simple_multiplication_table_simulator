@@ -15,9 +15,25 @@ def how_many_seconds_until_midnight():
     return (midnight - datetime.now()).seconds
 
 
+def get_spent_time(request):
+    """
+    Get difference bettwen current time and saved in session start time
+    """
+    start_time = datetime.strptime(request.session["start_time"], "%Y-%m-%d %H:%M:%S")
+    now = datetime.now().replace(microsecond=0)
+    time_delta = now - start_time
+    request.session.pop("start_time")
+    return (
+        time_delta.seconds // 3600,
+        time_delta.seconds // 60 % 60,
+        time_delta.seconds,
+    )
+
+
 @csrf_exempt
 def index(request):
     seconds_until_midnight = how_many_seconds_until_midnight()
+    request.session.set_expiry(seconds_until_midnight)
     if not request.session.get("start_page"):
         request.session["start_page"] = True
         return render(request, "start.html", {},)
@@ -25,18 +41,21 @@ def index(request):
         request.session["question_number"] = 0
     if not request.session.get("correct_aswers"):
         request.session["correct_aswers"] = 0
-    request.session.set_expiry(seconds_until_midnight)
     if request.method == "POST":
         choice = int(request.POST["choice"])
         form_multiplication_result = int(request.POST["result"])
         if choice != form_multiplication_result:
             if request.session["question_number"] == 10:
+                hours, minutes, seconds = get_spent_time(request)
                 return render(
                     request,
                     "negative_limit_per_day.html",
                     {
                         "form_multiplication_result": form_multiplication_result,
                         "correct_aswers": request.session["correct_aswers"],
+                        "hours": hours,
+                        "minutes": minutes,
+                        "seconds": seconds,
                     },
                 )
             else:
@@ -54,11 +73,19 @@ def index(request):
     random_insert_index = random.randint(0, 3)
     random_answers.insert(random_insert_index, multiplication_result)
     request.session["question_number"] += 1
+    if request.session["question_number"] == 1:
+        request.session["start_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     if request.session["question_number"] > 10:
+        hours, minutes, seconds = get_spent_time(request)
         return render(
             request,
             "positive_limit_per_day.html",
-            {"correct_aswers": request.session["correct_aswers"]},
+            {
+                "correct_aswers": request.session["correct_aswers"],
+                "hours": hours,
+                "minutes": minutes,
+                "seconds": seconds,
+            },
         )
     return render(
         request,
