@@ -29,7 +29,7 @@ def get_spent_time(request):
             time_delta.seconds // 60 % 60,
             time_delta.seconds,
         )
-    hours, minutes, seconds = None
+    hours, minutes, seconds = None, None, None
     return hours, minutes, seconds
 
 
