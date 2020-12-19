@@ -30,11 +30,21 @@ def index(request):
         choice = int(request.POST["choice"])
         form_multiplication_result = int(request.POST["result"])
         if choice != form_multiplication_result:
-            return render(
-                request,
-                "negative_answer.html",
-                {"form_multiplication_result": form_multiplication_result},
-            )
+            if request.session["question_number"] == 10:
+                return render(
+                    request,
+                    "negative_limit_per_day.html",
+                    {
+                        "form_multiplication_result": form_multiplication_result,
+                        "correct_aswers": request.session["correct_aswers"],
+                    },
+                )
+            else:
+                return render(
+                    request,
+                    "negative_answer.html",
+                    {"form_multiplication_result": form_multiplication_result},
+                )
         else:
             request.session["correct_aswers"] += 1
     first_number = random.randint(1, 10)
@@ -46,7 +56,9 @@ def index(request):
     request.session["question_number"] += 1
     if request.session["question_number"] > 10:
         return render(
-            request, "limit_per_day.html", {"correct_aswers": request.session["correct_aswers"]},
+            request,
+            "positive_limit_per_day.html",
+            {"correct_aswers": request.session["correct_aswers"]},
         )
     return render(
         request,
