@@ -19,14 +19,17 @@ def get_spent_time(request):
     """
     Get difference bettwen current time and saved in session start time
     """
-    start_time = datetime.strptime(request.session["start_time"], "%Y-%m-%d %H:%M:%S")
-    now = datetime.now().replace(microsecond=0)
-    time_delta = now - start_time
-    return (
-        time_delta.seconds // 3600,
-        time_delta.seconds // 60 % 60,
-        time_delta.seconds,
-    )
+    if request.session.get("start_time"):
+        start_time = datetime.strptime(request.session["start_time"], "%Y-%m-%d %H:%M:%S")
+        now = datetime.strptime(request.session["finish_time"], "%Y-%m-%d %H:%M:%S")
+        time_delta = now - start_time
+        return (
+            time_delta.seconds // 3600,
+            time_delta.seconds // 60 % 60,
+            time_delta.seconds,
+        )
+    hours, minutes, seconds = None, None, None
+    return hours, minutes, seconds
 
 
 @csrf_exempt
@@ -43,6 +46,7 @@ def index(request):
     if request.method == "POST":
         choice = int(request.POST["choice"])
         form_multiplication_result = int(request.POST["result"])
+        request.session["finish_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if choice != form_multiplication_result:
             if request.session["question_number"] == 10:
                 hours, minutes, seconds = get_spent_time(request)
