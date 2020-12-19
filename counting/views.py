@@ -18,10 +18,13 @@ def how_many_seconds_until_midnight():
 @csrf_exempt
 def index(request):
     seconds_until_midnight = how_many_seconds_until_midnight()
-    if not request.session.get("correct_aswers"):
-        request.session["correct_aswers"] = 0
+    if not request.session.get("start_page"):
+        request.session["start_page"] = True
+        return render(request, "start.html", {},)
     if not request.session.get("question_number"):
         request.session["question_number"] = 0
+    if not request.session.get("correct_aswers"):
+        request.session["correct_aswers"] = 0
     request.session.set_expiry(seconds_until_midnight)
     if request.method == "POST":
         choice = int(request.POST["choice"])
