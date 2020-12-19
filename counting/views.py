@@ -19,15 +19,16 @@ def get_spent_time(request):
     """
     Get difference bettwen current time and saved in session start time
     """
-    start_time = datetime.strptime(request.session["start_time"], "%Y-%m-%d %H:%M:%S")
-    now = datetime.now().replace(microsecond=0)
-    time_delta = now - start_time
-    request.session.pop("start_time")
-    return (
-        time_delta.seconds // 3600,
-        time_delta.seconds // 60 % 60,
-        time_delta.seconds,
-    )
+    if request.session.get("question_number"):
+        start_time = datetime.strptime(request.session["start_time"], "%Y-%m-%d %H:%M:%S")
+        now = datetime.now().replace(microsecond=0)
+        time_delta = now - start_time
+        request.session.pop("start_time")
+        return (
+            time_delta.seconds // 3600,
+            time_delta.seconds // 60 % 60,
+            time_delta.seconds,
+        )
 
 
 @csrf_exempt
