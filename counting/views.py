@@ -71,6 +71,18 @@ def index(request):
         else:
             if request.session["question_number"] <= 10 and not request.session.get("finish_time"):
                 request.session["correct_aswers"] += 1
+            else:
+                hours, minutes, seconds = get_spent_time(request)
+                return render(
+                    request,
+                    "positive_limit_per_day.html",
+                    {
+                        "correct_aswers": request.session["correct_aswers"],
+                        "hours": hours,
+                        "minutes": minutes,
+                        "seconds": seconds,
+                    },
+                )
     first_number = random.randint(1, 10)
     second_number = random.randint(1, 10)
     multiplication_result = first_number * second_number
@@ -84,7 +96,7 @@ def index(request):
         hours, minutes, seconds = get_spent_time(request)
         return render(
             request,
-            "positive_limit_per_day.html",
+            "limit_per_day.html",
             {
                 "correct_aswers": request.session["correct_aswers"],
                 "hours": hours,
