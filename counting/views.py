@@ -72,8 +72,11 @@ def index(request):
             if request.session["question_number"] <= 10 and not request.session.get("finish_time"):
                 request.session["correct_aswers"] += 1
             else:
-                if request.session["question_number"] == 10:
+                if request.session["question_number"] == 10 and not request.session.get(
+                    "finish_last_question"
+                ):
                     request.session["correct_aswers"] += 1
+                    request.session["finish_last_question"] = True
                 hours, minutes, seconds = get_spent_time(request)
                 return render(
                     request,
