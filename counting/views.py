@@ -46,7 +46,8 @@ def index(request):
     if request.method == "POST":
         choice = int(request.POST["choice"])
         form_multiplication_result = int(request.POST["result"])
-        request.session["finish_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if request.session["question_number"] == 10 and not request.session.get("finish_time"):
+            request.session["finish_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if choice != form_multiplication_result:
             if request.session["question_number"] == 10:
                 hours, minutes, seconds = get_spent_time(request)
@@ -68,7 +69,8 @@ def index(request):
                     {"form_multiplication_result": form_multiplication_result},
                 )
         else:
-            request.session["correct_aswers"] += 1
+            if request.session["question_number"] <= 10 and not request.session.get("finish_time"):
+                request.session["correct_aswers"] += 1
     first_number = random.randint(1, 10)
     second_number = random.randint(1, 10)
     multiplication_result = first_number * second_number
