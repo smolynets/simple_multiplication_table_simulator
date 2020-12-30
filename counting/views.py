@@ -111,7 +111,7 @@ def index(request):
         )
     return render(
         request,
-        "index.html",
+        "question_form.html",
         {
             "first_number": first_number,
             "second_number": second_number,
