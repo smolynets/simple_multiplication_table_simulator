@@ -32,6 +32,15 @@ def get_spent_time(request):
     return hours, minutes, seconds
 
 
+def get_correct_aswers_str(correct_aswers):
+    """
+    Different question words
+    """
+    if correct_aswers == 0 or correct_aswers >= 5:
+        return f"{correct_aswers} питань"
+    return f"{correct_aswers} питання"
+
+
 @csrf_exempt
 def index(request):
     seconds_until_midnight = how_many_seconds_until_midnight()
@@ -56,7 +65,9 @@ def index(request):
                     "negative_limit_per_day.html",
                     {
                         "form_multiplication_result": form_multiplication_result,
-                        "correct_aswers": request.session["correct_aswers"],
+                        "correct_aswers_str": get_correct_aswers_str(
+                            request.session["correct_aswers"]
+                        ),
                         "hours": hours,
                         "minutes": minutes,
                         "seconds": seconds,
@@ -82,7 +93,9 @@ def index(request):
                     request,
                     "positive_limit_per_day.html",
                     {
-                        "correct_aswers": request.session["correct_aswers"],
+                        "correct_aswers_str": get_correct_aswers_str(
+                            request.session["correct_aswers"]
+                        ),
                         "hours": hours,
                         "minutes": minutes,
                         "seconds": seconds,
@@ -103,7 +116,7 @@ def index(request):
             request,
             "limit_per_day.html",
             {
-                "correct_aswers": request.session["correct_aswers"],
+                "correct_aswers_str": get_correct_aswers_str(request.session["correct_aswers"]),
                 "hours": hours,
                 "minutes": minutes,
                 "seconds": seconds,
