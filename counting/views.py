@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
+from counting.models import FinishPerDay
+
 
 def how_many_seconds_until_midnight():
     """Get the number of seconds until midnight."""
@@ -37,6 +39,18 @@ def get_correct_aswers_str(correct_aswers):
     return f"{correct_aswers} питання"
 
 
+def create_finish_per_day(score, finish_time, spended_time):
+    """
+    Create FinishPerDay when finish studing per day
+    """
+    if not FinishPerDay.objects.filter(finish_time=finish_time).exists():
+        FinishPerDay.objects.create(
+            finish_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            score=score,
+            spended_time=spended_time,
+        )
+
+
 @csrf_exempt
 def index(request):
     seconds_until_midnight = how_many_seconds_until_midnight()
@@ -56,6 +70,9 @@ def index(request):
         if choice != form_multiplication_result:
             if request.session["question_number"] == 10:
                 seconds = get_spent_time(request)
+                create_finish_per_day(
+                    request.session["correct_aswers"], request.session.get("finish_time"), seconds
+                )
                 return render(
                     request,
                     "negative_limit_per_day.html",
@@ -83,6 +100,9 @@ def index(request):
                     request.session["correct_aswers"] += 1
                     request.session["finish_last_question"] = True
                 seconds = get_spent_time(request)
+                create_finish_per_day(
+                    request.session["correct_aswers"], request.session.get("finish_time"), seconds
+                )
                 return render(
                     request,
                     "positive_limit_per_day.html",
