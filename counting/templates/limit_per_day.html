@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1 class="mt-2 text-center h1">На сьогодні досить. <br> Ви правильно відповіли на {{correct_aswers_str}}</h1>
-<br>
-<h1 class="mt-2 text-center">Ви витратили {{seconds}} сек.</h1>
+{% if seconds %}
+  <br>
+  <h1 class="mt-2 text-center">Ви витратили {{seconds}} сек.</h1>
+{% endif %}
 {% endblock %}
