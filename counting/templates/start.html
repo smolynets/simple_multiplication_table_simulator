@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
+{% load solo_tags %}
   {% block content %}
-    <h1 class="mt-2 text-center h1">Привіт! Я простенький тренажер, який дозволить тобі повторити (чи вивчити) таблицю множення</h1>
-    <h1 class="mt-2 text-center">Я задам тобі 10 простих прикладів</h1>
+    {% get_solo 'counting.SiteConfiguration' as site_config %}
+    <div class="col text-center pt-3">
+      <p>
+        {% if site_config.greeting_text %}
+          {{ site_config.greeting_text }}
+        {% else %}
+          Привіт! Я простенький тренажер, який дозволить тобі повторити (чи вивчити) таблицю множення.
+          Я задам тобі 10 простих прикладів.
+        {% endif %}
+      </p>
+    </div>
     <div class="col text-center pt-3">
       <a href="{% url 'index' %}">Почати?</a>
     </div>

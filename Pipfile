@@ -7,6 +7,7 @@ name = "pypi"
 requests = "*"
 django = "*"
 ipdb = "*"
+django-solo = "*"
 
 [dev-packages]
 pytest = "*"
