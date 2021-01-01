@@ -8,8 +8,5 @@ class FinishPerDayAdmin(admin.ModelAdmin):
     list_display = ("finish_time", "score", "spended_time")
 
 
-config = SiteConfiguration.get_solo()
-
-
 admin.site.register(FinishPerDay, FinishPerDayAdmin)
 admin.site.register(SiteConfiguration, SingletonModelAdmin)
