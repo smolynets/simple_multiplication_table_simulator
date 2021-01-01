@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% load solo_tags %}
-  {% block content %}
-    {% get_solo 'counting.SiteConfiguration' as site_config %}
-    <div class="col text-center pt-3">
-      <p>
-        {% if site_config.greeting_text %}
-          {{ site_config.greeting_text }}
-        {% else %}
-          Привіт! Я простенький тренажер, який дозволить тобі повторити (чи вивчити) таблицю множення.
-          Я задам тобі 10 простих прикладів.
-        {% endif %}
-      </p>
-    </div>
-    <div class="col text-center pt-3">
-      <a href="{% url 'index' %}">Почати?</a>
-    </div>
-  {% endblock %}
+{% block content %}
+{% get_solo 'counting.SiteConfiguration' as site_config %}
+<div class="col text-center pt-3">
+  <p>
+    {% if site_config.greeting_text %}
+    {{ site_config.greeting_text }}
+    {% else %}
+    Привіт! <br> Я тренажер, який дозволить тобі повторити таблицю множення.
+    <br> Я задам тобі 10 простих прикладів.
+    {% endif %}
+  </p>
+</div>
+<div class="col text-center pt-3">
+  <a href="{% url 'index' %}">Старт</a>
+</div>
+{% endblock %}
