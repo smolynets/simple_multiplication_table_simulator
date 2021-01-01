@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
-  {% block content %}
-    <h1 class="mt-2 text-center h1">Не правильно. Правильна відповідь {{form_multiplication_result}}</h1>
-    <div class="col text-center pt-3">
-      <a href="{% url 'index' %}">Продовжити?</a>
-    </div>
-  {% endblock %}
+{% block content %}
+<h1 class="mt-2 text-center h1 negative">
+  <br> Правильна відповідь {{form_multiplication_result}}</h1>
+<div class="col text-center pt-3">
+  <a href="{% url 'index' %}">Продовжити?</a>
+</div>
+{% endblock %}
