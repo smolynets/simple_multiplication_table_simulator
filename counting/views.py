@@ -21,7 +21,7 @@ def get_spent_time(request):
     """
     Get difference bettwen current time and saved in session start time
     """
-    if request.session.get("start_time"):
+    if request.session.get("start_time") and request.session.get("finish_time"):
         start_time = datetime.strptime(request.session["start_time"], "%Y-%m-%d %H:%M:%S")
         now = datetime.strptime(request.session["finish_time"], "%Y-%m-%d %H:%M:%S")
         time_delta = now - start_time
