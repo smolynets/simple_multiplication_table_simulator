@@ -113,8 +113,10 @@ def index(request):
                         "seconds": seconds,
                     },
                 )
-    first_number = random.randint(1, 10)
-    second_number = random.randint(1, 10)
+    # first_number = random.randint(1, 10)
+    # second_number = random.randint(1, 10)
+    first_number = random.randint(-10, 10)
+    second_number = random.randint(-10, 10)
     multiplication_result = first_number * second_number
     random_answers = random.sample(range(1, 100), 3)
     random_insert_index = random.randint(0, 3)
