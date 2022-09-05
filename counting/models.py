@@ -10,7 +10,8 @@ class FinishPerDay(models.Model):
     score = models.CharField(max_length=10)
     spended_time = models.CharField(max_length=1000)
 
-    def how_many_seconds_until_midnight():
+    @classmethod
+    def how_many_seconds_until_midnight(cls):
         """
         Get the number of seconds until midnight.
         """
