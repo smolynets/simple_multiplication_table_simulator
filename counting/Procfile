@@ -1,0 +1,1 @@
+web: gunicorn multiplication_table.wsgi:application
