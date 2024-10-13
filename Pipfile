@@ -8,6 +8,7 @@ requests = "*"
 django = "*"
 ipdb = "*"
 django-solo = "*"
+gunicorn = "*"
 
 [dev-packages]
 pytest = "*"
